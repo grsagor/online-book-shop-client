@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthProvider';
 
 const Login = () => {
 
-    const { register, handleSubmit } = useForm();
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const from = location.state?.from?.pathname || '/';
+
+    const {signIn} = useContext(AuthContext);
+
+    const { register, formState: {errors} , handleSubmit } = useForm();
     const handleLogin = data => {
-        console.log(data);
+        signIn(data.email, data.password)
+        .then(res => {
+            const user = res.user;
+            console.log(user);
+            navigate(from, {replace: true});
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
     return (
@@ -17,12 +33,14 @@ const Login = () => {
 
                     <div className="form-control w-full max-w-xs">
                         <label className="label"><span className="label-text">Email</span></label>
-                        <input {...register("email")} type="text" placeholder="Enter email" className="input input-bordered w-full max-w-xs"/>
+                        <input {...register("email", {required: "Email Address is required"})} type="text" placeholder="Enter email" className="input input-bordered w-full max-w-xs"/>
+                        {errors.email && <p className='text-error'>{errors.email?.message}</p>}
                     </div>
 
                     <div className="form-control w-full max-w-xs">
                         <label className="label"><span className="label-text">Password</span></label>
-                        <input {...register("password")} type="password" placeholder="Enter password" className="input input-bordered w-full max-w-xs"/>
+                        <input {...register("password", {required: "Password is required"})} type="password" placeholder="Enter password" className="input input-bordered w-full max-w-xs"/>
+                        {errors.password && <p className='text-error'>{errors.password?.message}</p>}
                         <label className="label"><span className="label-text">Forgot Password?</span></label>
                     </div>
 
