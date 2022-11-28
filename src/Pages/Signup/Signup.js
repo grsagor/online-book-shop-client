@@ -23,7 +23,7 @@ const Signup = () => {
             }
             updateUser(userInfo)
             .then(()=> {
-                navigate('/');
+                saveUsers(data?.displayName, data?.email)
             })
             .catch(error => {
                 console.log(error);
@@ -31,6 +31,22 @@ const Signup = () => {
         })
         .catch(error => {
             console.log(error);
+        })
+    }
+
+    const saveUsers = (name, email) => {
+        const user = {name, email};
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            navigate('/');
         })
     }
 
