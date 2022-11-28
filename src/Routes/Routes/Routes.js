@@ -1,6 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
+import DashboardLayout from "../../Layout/DashboardLayout";
 import Main from "../../Layout/Main";
+import Books from "../../Pages/Books/Books/Books";
 import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
+import MyBookings from "../../Pages/Dashboard/MyBookings/MyBookings";
 import Home from "../../Pages/Home/Home";
 import Login from "../../Pages/Login/Login";
 import Signup from "../../Pages/Signup/Signup";
@@ -24,11 +27,24 @@ const router = createBrowserRouter([
                 element: <Signup></Signup>
             },
             {
-                path: '/dashboard',
-                element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
-            },
+                path: '/books/:id',
+                loader: async ({params}) => {
+                    return fetch(`http://localhost:5000/books/${params.id}`)
+                },
+                element: <Books></Books>
+            }
         ]
-    }
+    },
+    {
+        path: '/dashboard',
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        children: [
+            {
+                path: '/dashboard',
+                element: <MyBookings></MyBookings>
+            }
+        ]
+    },
 ])
 
 export default router;
