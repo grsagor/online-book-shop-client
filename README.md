@@ -1,6 +1,6 @@
 Admin Account Details:
-    email: admin@admin.com
-    password: 111111
+    adminEmail: admin@admin.com
+    adminPassword: 111111
 
 Live website link: https://assignment-12-49fd8.web.app
 
