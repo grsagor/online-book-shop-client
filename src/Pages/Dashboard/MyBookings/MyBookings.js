@@ -6,7 +6,7 @@ import MyBooking from './MyBooking';
 const MyBookings = () => {
     const {user} = useContext(AuthContext);
 
-    const url = `http://localhost:5000/bookings?email=${user?.email}`
+    const url = `https://assignment-12-server-grsagor.vercel.app/bookings?email=${user?.email}`
 
     const { data: mybookings = []} = useQuery({
         queryKey: ['bookings', user?.email],

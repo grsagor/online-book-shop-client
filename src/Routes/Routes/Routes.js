@@ -2,10 +2,12 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import Main from "../../Layout/Main";
 import Books from "../../Pages/Books/Books/Books";
-import AllUsers from "../../Pages/Dashboard/AllUsers/AllUsers";
+import AddProducts from "../../Pages/Dashboard/AddProducts/AddProducts";
+import AllBuyers from "../../Pages/Dashboard/AllBuyers/AllBuyers";
+import AllSellers from "../../Pages/Dashboard/AllSellers/AllSellers";
 import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
-import MyBookings from "../../Pages/Dashboard/MyBookings/MyBookings";
-import MyBuyers from "../../Pages/Dashboard/MyBuyers/MyBuyers";
+import MyOrders from "../../Pages/Dashboard/MyOrders/MyOrders";
+import MyProducts from "../../Pages/Dashboard/MyProducts/MyProducts";
 import Home from "../../Pages/Home/Home";
 import Login from "../../Pages/Login/Login";
 import Signup from "../../Pages/Signup/Signup";
@@ -32,7 +34,7 @@ const router = createBrowserRouter([
             {
                 path: '/books/:id',
                 loader: async ({params}) => {
-                    return fetch(`http://localhost:5000/books/${params.id}`)
+                    return fetch(`https://assignment-12-server-grsagor.vercel.app/books/${params.id}`)
                 },
                 element: <Books></Books>
             }
@@ -44,15 +46,27 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/dashboard',
-                element: <MyBookings></MyBookings>
+                element: <Dashboard></Dashboard>
             },
             {
-                path: '/dashboard/users',
-                element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+                path: '/dashboard/myorders',
+                element: <MyOrders></MyOrders>
             },
             {
-                path: '/dashboard/mybuyers',
-                element: <MyBuyers></MyBuyers>
+                path: '/dashboard/allsellers',
+                element: <AdminRoute><AllSellers></AllSellers></AdminRoute>
+            },
+            {
+                path: '/dashboard/allbuyers',
+                element: <AdminRoute><AllBuyers></AllBuyers></AdminRoute>
+            },
+            {
+                path: '/dashboard/addproduct',
+                element: <AddProducts></AddProducts>
+            },
+            {
+                path: '/dashboard/myproducts',
+                element: <MyProducts></MyProducts>
             },
         ]
     },

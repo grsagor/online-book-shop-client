@@ -45,7 +45,7 @@ const Signup = () => {
 
     const saveUsers = (name, email, role) => {
         const user = { name, email, role };
-        fetch('http://localhost:5000/users', {
+        fetch('https://assignment-12-server-grsagor.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

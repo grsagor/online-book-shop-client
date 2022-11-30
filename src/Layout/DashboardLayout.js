@@ -9,7 +9,7 @@ const DashboardLayout = () => {
     const {user} = useContext(AuthContext);
     const [isAdmin] = useAdmin(user?.email);
     const [isSeller] = useSeller(user?.email);
-    console.log(isAdmin);
+    console.log(isSeller);
     return (
         <div>
             <Navbar></Navbar>
@@ -23,17 +23,19 @@ const DashboardLayout = () => {
                     <ul className="menu p-4 w-80 bg-base-100 text-base-content">
                         {
                             !isAdmin && !isSeller && <>
-                                <li><Link to='/dashboard'>My Bookings</Link></li>
+                                <li><Link to='/dashboard/myorders'>My Orders</Link></li>
                             </>
                         }
                         {
                             isAdmin && <>
-                                <li><Link to='/dashboard/users'>All Users</Link></li>
+                                <li><Link to='/dashboard/allsellers'>All Sellers</Link></li>
+                                <li><Link to='/dashboard/allbuyers'>All Buyers</Link></li>
                             </>
                         }
                         {
                             isSeller && <>
-                                <li><Link to='/dashboard/mybuyers'>My Buyers</Link></li>
+                                <li><Link to='/dashboard/addproduct'>Add A Product</Link></li>
+                                <li><Link to='/dashboard/myproducts'>My Products</Link></li>
                             </>
                         }
                     </ul>
