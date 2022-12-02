@@ -6,7 +6,7 @@ import useSeller from '../../hooks/useSeller';
 
 const AdminRoute = ({children}) => {
     const {user, loading} = useContext(AuthContext);
-    const [isAdmin, isAdminLoading] = useAdmin(user?.email);
+    const [ isAdminLoading] = useAdmin(user?.email);
     const [isSeller, isSellerLoading] = useSeller(user?.email);
     const location = useLocation();
 

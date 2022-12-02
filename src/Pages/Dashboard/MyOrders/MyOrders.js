@@ -22,6 +22,7 @@ const MyOrders = () => {
                         <tr>
                             <th>Book Name</th>
                             <th>Price</th>
+                            <th>Pay</th>
                         </tr>
                     </thead>
                     <tbody>

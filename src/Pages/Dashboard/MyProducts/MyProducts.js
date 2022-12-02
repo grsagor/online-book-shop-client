@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { AuthContext } from '../../../context/AuthProvider';
 import MyProduct from './MyProduct';
 
@@ -13,6 +14,34 @@ const MyProducts = () => {
             return data;
         }
     });
+
+    const handleDelete = id => {
+        fetch(`https://assignment-12-server-grsagor.vercel.app/book/${id}`, {
+            method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            if(data.deletedCount > 0){
+                toast.success('Deleted Successfully');
+                refetch();
+            }
+        })
+    }
+
+    const addAdvertise = (id) => {
+        fetch(`https://assignment-12-server-grsagor.vercel.app/book/advertise/${id}`, {
+            method: 'PUT',
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if(data.modifiedCount>0){
+                    toast.success('Advertised');
+                    refetch();
+                }
+            })
+    }
     return (
         <div>
             <h2 className='text-3xl'>My Products</h2>
@@ -23,6 +52,7 @@ const MyProducts = () => {
                             <th>Book Name</th>
                             <th>Category Name</th>
                             <th>Advertise</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -30,6 +60,8 @@ const MyProducts = () => {
                             products.map(product => <MyProduct
                                 key={product._id}
                                 product = {product}
+                                handleDelete = {handleDelete}
+                                addAdvertise = {addAdvertise}
                             ></MyProduct>)
                         }
                     </tbody>

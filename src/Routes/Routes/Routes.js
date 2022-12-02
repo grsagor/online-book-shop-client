@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import Main from "../../Layout/Main";
+import Blog from "../../Pages/Blog/Blog";
 import Books from "../../Pages/Books/Books/Books";
 import AddProducts from "../../Pages/Dashboard/AddProducts/AddProducts";
 import AllBuyers from "../../Pages/Dashboard/AllBuyers/AllBuyers";
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
                     return fetch(`https://assignment-12-server-grsagor.vercel.app/books/${params.id}`)
                 },
                 element: <Books></Books>
-            }
+            },
+            {
+                path: '/blog',
+                element: <Blog></Blog>
+            },
         ]
     },
     {

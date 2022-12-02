@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthProvider';
 
 const AddProducts = () => {
     const {user} = useContext(AuthContext);
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbb_key;
     console.log(imageHostKey)
@@ -39,6 +41,7 @@ const AddProducts = () => {
 
                 if(user){
                     data.sellerEmail = user.email;
+                    data.sellerName = user.displayName;
                 }
 
                 fetch('https://assignment-12-server-grsagor.vercel.app/books', {
@@ -53,6 +56,7 @@ const AddProducts = () => {
                         console.log(data)
                         if(data?.acknowledged){
                             toast.success('Product Added')
+                            navigate('/dashboard/myproducts');
                         }
                     })
             }
@@ -94,13 +98,23 @@ const AddProducts = () => {
                     </div>
 
                     <div className="form-control w-full max-w-xs">
-                        <label className="label"><span className="label-text">Enter Price</span></label>
-                        <input {...register("price")} type="text" placeholder="Enter price" className="input input-bordered w-full max-w-xs" />
+                        <label className="label"><span className="label-text">Enter Resale Price</span></label>
+                        <input {...register("resalePrice")} type="text" placeholder="Enter price" className="input input-bordered w-full max-w-xs" />
+                    </div>
+
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label"><span className="label-text">Enter Original Price</span></label>
+                        <input {...register("originalPrice")} type="text" placeholder="Enter price" className="input input-bordered w-full max-w-xs" />
                     </div>
 
                     <div className="form-control w-full max-w-xs">
                         <label className="label"><span className="label-text">Enter Purchasing Year</span></label>
                         <input {...register("year")} type="text" placeholder="Enter Purchasing Year" className="input input-bordered w-full max-w-xs" />
+                    </div>
+
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label"><span className="label-text">Enter Time</span></label>
+                        <input {...register("time")} type="time" placeholder="Enter Purchasing Year" className="input input-bordered w-full max-w-xs" />
                     </div>
 
                     <div className="form-control w-full max-w-xs">

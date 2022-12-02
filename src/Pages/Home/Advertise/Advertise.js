@@ -9,13 +9,13 @@ const Advertise = () => {
     const { data: products = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('https://assignment-12-server-grsagor.vercel.app/advertise');
+            const res = await fetch('https://assignment-12-server-grsagor.vercel.app/books?advertise=yes');
             const data = await res.json();
             return data;
         }
     });
     return (
-        <div>
+        <div className='bg-base-300 p-6 border rounded m-4'>
             <h2 className='text-3xl'>Advertisements</h2>
             <div className='grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 m-4'>
                 {
