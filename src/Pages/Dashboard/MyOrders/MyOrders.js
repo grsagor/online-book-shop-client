@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../context/AuthProvider';
+import MyOrder from './MyOrder';
 
 const MyOrders = () => {
     const { user } = useContext(AuthContext);
@@ -25,10 +26,10 @@ const MyOrders = () => {
                     </thead>
                     <tbody>
                         {
-                            products?.map(product => <tr className="hover">
-                                <th>{product.bookName}</th>
-                                <td>{product.price}</td>
-                            </tr>)
+                            products?.map(product => <MyOrder
+                                key={product._id}
+                                product = {product}
+                            ></MyOrder>)
                         }
                     </tbody>
                 </table>

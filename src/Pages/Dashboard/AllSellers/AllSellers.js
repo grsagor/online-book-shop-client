@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import toast from 'react-hot-toast';
+import { MdDone } from 'react-icons/md';
 
 const AllSellers = () => {
 
@@ -30,6 +31,23 @@ const AllSellers = () => {
         })
     }
 
+    const handdleVerifiedSeller = id => {
+        fetch(`https://assignment-12-server-grsagor.vercel.app/users/verifyseller/${id}`, {
+            method: 'PUT',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            if(data.modifiedCount>0){
+                toast.success('Seller Verified');
+                refetch();
+            }
+        })
+    }
+
     const handleDelete = id => {
         fetch(`https://assignment-12-server-grsagor.vercel.app/user/${id}`, {
             method: 'DELETE'
@@ -54,15 +72,19 @@ const AllSellers = () => {
                             <th>Name</th>
                             <th>Email</th>
                             <th>Admin</th>
+                            <th>Verify</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
                             sellers.map(seller => <tr className="hover">
-                                <th>{seller.name}</th>
+                                <th>{seller.name}{seller?.verifiedSeller === 'yes' && 
+                                <MdDone className='inline text-blue-700 border-blue-700 border rounded-full ml-2'></MdDone>
+                                }</th>
                                 <td>{seller.email}</td>
                                 <td>{seller?.role !== 'admin' && <button onClick={()=> handdleAdmin(seller._id)} className='btn btn-xs btn-primary'>Make Admin</button>}</td>
+                                <td>{seller?.verifiedSeller !== 'yes' && <button onClick={()=> handdleVerifiedSeller(seller._id)} className='btn btn-xs btn-primary'>Verify Seller</button>}</td>
                                 <td><button onClick={() => handleDelete(seller._id)} className='btn btn-xs btn-error'>Delete</button></td>
                         </tr>)
                         }
